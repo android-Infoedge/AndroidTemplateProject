@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">BaseProject</string>
+    <string name="example_action_clicked">Example action clicked</string>
+    <string name="example_action">Example action</string>
+    <string name="example_action_long_title">Example action with a long title which wraps</string>
+    <string name="phone_action_clicked">Phone action clicked</string>
+    <string name="wearable_action_clicked">Wearable action clicked</string>
+    <string name="phone_action">Phone action</string>
+    <string name="wearable_action">Wearable action</string>
+    <string name="content_intent_clicked">Content intent clicked</string>
+    <string name="basic_example_title">Basic example title</string>
+    <string name="basic_example_text">Basic example text</string>
+    <string name="big_picture_style_example_title">Big picture style example title</string>
+    <string name="big_picture_style_example_summary">Big picture style example summary</string>
+</resources>

@@ -1,0 +1,3 @@
+curl -X POST -H "Authorization: key= <Server API Key>" -H "Content-Type: application/json" -d '{
+"registration_ids":["<GCM ID>"],"data": {"extraData":{"notificationType":0,"landingPage":4,"title":"Sample Title",
+"message":"Sample","iconUrl":"D"}}}' https://android.googleapis.com/gcm/send
