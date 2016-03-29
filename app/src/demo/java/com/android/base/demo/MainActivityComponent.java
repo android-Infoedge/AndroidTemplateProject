@@ -1,6 +1,7 @@
 package com.android.base.demo;
 
 import com.android.base.common.di.ActivityScope;
+import com.android.base.common.mvp.Presenter;
 
 import dagger.Subcomponent;
 
@@ -11,4 +12,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = MainActivityModule.class)
 public interface MainActivityComponent {
     void inject(MainActivity mainActivity);
+
+    MainActivityContract.MainActivityPresenter presenter();
 }

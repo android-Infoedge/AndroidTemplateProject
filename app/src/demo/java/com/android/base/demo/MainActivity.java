@@ -1,25 +1,30 @@
 package com.android.base.demo;
 
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.widget.Toast;
 
 import com.android.base.AppController;
+import com.android.base.PresenterLoadableBaseActivity;
 import com.android.base.R;
-import com.android.base.common.di.BaseActivity;
+import com.android.base.common.BaseActivity;
+import com.android.base.common.mvp.IView;
+import com.android.base.common.mvp.Presenter;
+import com.android.base.common.mvp.PresenterLoader;
 import com.android.base.demo.network.models.Question;
 import com.android.base.demo.network.models.StackOverflowQuestions;
 import com.android.base.utils.LogUtils;
 
-import javax.inject.Inject;
-
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements MainActivityContract.View {
+public class MainActivity extends PresenterLoadableBaseActivity implements MainActivityContract.View {
 
     private final static String TAG = LogUtils.makeLogTag(MainActivity.class);
 
-    @Inject
-    MainActivityContract.UserActionsListener mUserActionsListener;
+
+    MainActivityContract.MainActivityPresenter mPresenter;
+    private MainActivityComponent mComponent;
 
 
     @Override
@@ -28,36 +33,28 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
         setContentView(R.layout.activity_main);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mUserActionsListener.sendScreenViewEvent(getScreenName());
-    }
 
     @Override
     protected void setUpActivityComponent() {
-        AppController.get(getApplicationContext()).getAppComponent().plus(new MainActivityModule(this,"Main Activity"))
-                .inject(this);
-        if(mUserActionsListener == null) {
-            throw new IllegalStateException("Presenter for this view cannot be null");
-        }
-
+        mComponent = AppController.get(getApplicationContext()).getAppComponent().plus(new MainActivityModule(this,
+                "Main Activity"));
+        mComponent.inject(this);
         Toast.makeText(MainActivity.this, getScreenName(), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.bt_gcm_register_request)
     public void onGcmRegistrationButtonClicked() {
-        mUserActionsListener.handleGcmRegistrtaionClick(this);
+        mPresenter.handleGcmRegistrtaionClick(this);
     }
 
     @OnClick(R.id.bt_analytics_event_test)
     public void onAnalyticsEventButtonClicked() {
-        mUserActionsListener.handleAnalyticsEventTestClick();
+        mPresenter.handleAnalyticsEventTestClick();
     }
 
     @OnClick(R.id.bt_retrofit_call_demo)
     public void onRetrofitCallDemoButtonClicked() {
-        mUserActionsListener.handleRetrofitCallDemoClick();
+        mPresenter.handleRetrofitCallDemoClick();
     }
 
     @Override
@@ -91,4 +88,13 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
         }
     }
 
+    @Override
+    protected Presenter provideUiPresenter() {
+        return mComponent.presenter();
+    }
+
+    @Override
+    protected void onPresenterLoaded() {
+        mPresenter = (MainActivityContract.MainActivityPresenter) getPresenter();
+    }
 }

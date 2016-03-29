@@ -2,6 +2,8 @@ package com.android.base.demo;
 
 import android.app.Activity;
 
+import com.android.base.common.mvp.IView;
+import com.android.base.common.mvp.Presenter;
 import com.android.base.demo.network.models.StackOverflowQuestions;
 
 /**
@@ -9,7 +11,7 @@ import com.android.base.demo.network.models.StackOverflowQuestions;
  */
 public interface MainActivityContract {
 
-    interface View {
+    interface View extends IView {
         void onGcmRegistrationClickResult();
         void onAnalyticsEventTestClickResult();
         void onRetrofitCallDemoResultSuccess(StackOverflowQuestions stackOverflowQuestions);
@@ -17,7 +19,7 @@ public interface MainActivityContract {
     }
 
 
-    interface UserActionsListener {
+    interface MainActivityPresenter extends Presenter<View> {
         void handleGcmRegistrtaionClick(Activity activity);
         void handleAnalyticsEventTestClick();
         void handleRetrofitCallDemoClick();

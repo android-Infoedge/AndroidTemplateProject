@@ -11,12 +11,11 @@ import com.android.base.utils.LogUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by gagandeep on 21/3/16.
  */
-public class MainActivityPresenter implements MainActivityContract.UserActionsListener {
+public class MainActivityPresenter implements MainActivityContract.MainActivityPresenter {
 
     private final static String TAG = LogUtils.makeLogTag(MainActivityPresenter.class);
 
@@ -68,5 +67,20 @@ public class MainActivityPresenter implements MainActivityContract.UserActionsLi
     @Override
     public void sendScreenViewEvent(String screenName) {
         mGoogleAnalyticsManager.sendScreenView(screenName);
+    }
+
+    @Override
+    public void onViewAttached(MainActivityContract.View view) {
+
+    }
+
+    @Override
+    public void onViewDetached() {
+
+    }
+
+    @Override
+    public void onDestroyed() {
+
     }
 }

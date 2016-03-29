@@ -1,4 +1,4 @@
-package com.android.base.common.di;
+package com.android.base.common;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
